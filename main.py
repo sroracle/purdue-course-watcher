@@ -8,11 +8,13 @@ readline = argparse(description='Lookup seat availability for a course in myPurd
 try:
    path.append('/usr/local/bin')
    from push import push
-   readline.add_argument('-p', '--push', action='store_true', help='Send notification to configured mobile device.')
+   readline.add_argument('-p', '--push', action = 'store_true', help = 'Send'
+                         'notification to configured mobile device.')
    canpush = True
-except:
-   canpush = False
-readline.add_argument('term', type=int, help='School semester. For example, 201610 is Fall 2015 (take careful note that it uses the wrong year for fall terms), and 201620 is Spring 2016.')
+except: canpush = False
+readline.add_argument('term', type = int, help = 'School semester. For example, '
+                      '201610 is Fall 2015 (take careful note that it uses the '
+                      'wrong year for fall terms), and 201620 is Spring 2016.')
 readline.add_argument('crn', metavar='CRN', type=int, help='Course request number.')
 args = readline.parse_args()
 if not canpush: args.push = False
