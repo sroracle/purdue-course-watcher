@@ -32,7 +32,7 @@ except:
 
 try:
    tree = soup(out)
-   seats = int(tree.select('table.datadisplaytable td.dddefault')[2].get_text())
+   seats = int(tree.select('table.datadisplaytable td.dddefault')[3].get_text())
    course = tree.select('table.datadisplaytable th')[0].get_text()
 except:
    print('Error parsing myPurdue output:')
