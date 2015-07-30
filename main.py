@@ -1,12 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from sys import path
+from os.path import expanduser
 from bs4 import BeautifulSoup as soup
 from argparse import ArgumentParser as argparse
 from http.client import HTTPSConnection as https
 
 readline = argparse(description='Lookup seat availability for a course in myPurdue.')
 try:
-   path.append('/usr/local/bin')
+   path.append(expanduser('~/bin'))
    from push import push
    readline.add_argument('-p', '--push', action = 'store_true', help = 'Send'
                          'notification to configured mobile device.')
@@ -41,5 +42,4 @@ except:
 if seats > 0:
    result = 'There are %s open seats in %s!' % (seats, course)
    print(result)
-   if args.push:
-      push('Purdue course watcher\n' + result)
+   if args.push: push('Purdue course watcher\n' + result)

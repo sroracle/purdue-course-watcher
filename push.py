@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 from sys import stdin, exit
 from smtplib import SMTP_SSL
 from configparser import ConfigParser
-endl = '\r\n'
+from os.path import expanduser
 
 def config(ini):
    rc = ConfigParser()
@@ -11,7 +11,7 @@ def config(ini):
       rc['Connection']['Username'] = rc['Mail']['From']
    return rc
 
-def push(msg, ini = '/etc/push.py.ini'):
+def push(msg, ini = expanduser('~/.config/push.py.ini')):
    rc = config(ini)
    with SMTP_SSL(rc['Connection']['Server']) as sock:
       sock.ehlo()
@@ -24,5 +24,5 @@ if __name__ == '__main__':
    if not stdin:
       print('Must provide message on standard input.')
       exit(1)
-   msg = endl + endl + ''.join(stdin)
+   msg = ''.join(stdin)
    push(msg)
