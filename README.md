@@ -6,7 +6,7 @@ Installation
 ============
 1. Install `beautifulsoup4` for Python 3.
 2. Download the script.
-3. Optionally, symlink `push.py` into `~/bin` and edit `~/.config/push.py.ini` like the given `push.py.ini`.
+3. Optionally, edit `~/.config/push.py.ini` like the given `push.py.ini` to enable push support.
 4. Enjoy!
 
 Usage
