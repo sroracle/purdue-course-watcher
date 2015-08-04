@@ -2,7 +2,7 @@
 from configparser import ConfigParser
 from os.path import expanduser
 from smtplib import SMTP_SSL
-from sys import stdin, exit, argv
+from sys import argv, exit, stdin
 
 
 def fatal_unconfigured():
@@ -31,8 +31,8 @@ def push(rc, msg):
 if __name__ == '__main__':
    msg = argv[1:] or stdin.readlines()
    if not msg:
-      print('Must provide message on standard input or as an argument.')
-      exit(1)
+      print('Error: must provide message on standard input or as an argument.')
+      exit(2)
    msg = ''.join(msg)
    try: rc = config()
    except KeyError: fatal_unconfigured()
