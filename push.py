@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 from configparser import ConfigParser
-from os.path import expanduser
-from smtplib import SMTP_SSL
-from sys import argv, exit, stdin
-
-
-def fatal_unconfigured():
-   print('Error: it appears push has not been configured.')
-   print('Please copy push.py.ini to ~/.config and edit it.')
-   exit(1)
+from os.path      import expanduser
+from smtplib      import SMTP_SSL
+from sys          import argv, exit, stdin
 
 
 def config(ini = expanduser('~/.config/push.py.ini')):
@@ -25,7 +19,6 @@ def push(rc, msg):
       sock.ehlo()
       sock.login(rc['Connection']['Username'], rc['Connection']['Password'])
       sock.sendmail(rc['Mail']['From'], rc['Mail']['To'], msg)
-      sock.close()
 
 
 if __name__ == '__main__':
@@ -35,5 +28,8 @@ if __name__ == '__main__':
       exit(2)
    msg = ''.join(msg)
    try: rc = config()
-   except KeyError: fatal_unconfigured()
+   except KeyError:
+      print('Error: it appears push has not been configured.')
+      print('Please copy push.py.ini to ~/.config and edit it.')
+      exit(1)
    push(rc, msg)
