@@ -13,12 +13,12 @@ Usage
 =====
 Run the script as follows:
 
-    python3 main.py TERM CRN
+    ./main.py TERM CRN
 
 Note: For fall 2015, the "term" is 201610. So, if I were to query for open seats in ECON451: Game Theory for next
 semester, I would run the following:
 
-    python3 main.py 201610 53454
+    ./main.py 201610 53454
 
 `push.py` can also be used as a standalone script, as in the following:
 
