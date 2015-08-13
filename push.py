@@ -11,19 +11,19 @@ def fatal_unconfigured():
     exit(1)
 
 
-def config(ini=expanduser('~/.config/push.py.ini')):
-    rc = ConfigParser()
-    rc.read(ini)
-    if 'Username' not in rc['Connection']:
-        rc['Connection']['Username'] = rc['Mail']['From']
-    return rc
+def configure(location=expanduser('~/.config/push.py.ini')):
+    ini = ConfigParser()
+    ini.read(location)
+    if 'Username' not in ini['Connection']:
+        ini['Connection']['Username'] = ini['Mail']['From']
+    return ini
 
 
-def push(rc, msg):
-    with SMTP_SSL(rc['Connection']['Server']) as sock:
+def push(ini, content):
+    with SMTP_SSL(ini['Connection']['Server']) as sock:
         sock.ehlo()
-        sock.login(rc['Connection']['Username'], rc['Connection']['Password'])
-        sock.sendmail(rc['Mail']['From'], rc['Mail']['To'], msg)
+        sock.login(ini['Connection']['Username'], ini['Connection']['Password'])
+        sock.sendmail(ini['Mail']['From'], ini['Mail']['To'], content)
 
 
 if __name__ == '__main__':
@@ -33,8 +33,8 @@ if __name__ == '__main__':
         exit(2)
     msg = ''.join(msg)
     try:
-        rc = config()
+        config = configure()
     except KeyError:
         fatal_unconfigured()
 
-    push(rc, msg)
+    push(config, msg)

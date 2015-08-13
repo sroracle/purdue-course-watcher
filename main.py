@@ -17,6 +17,9 @@ class PuCourse:
         self.path = '/prod/bwckschd.p_disp_detail_sched?term_in=%s' \
                     '&crn_in=%s' % (self.term, self.crn)
 
+        self.scrape()
+        self.parse()
+
     def scrape(self):
         '''Scrapes myPurdue for the course's information.'''
         sock = HTTPSConnection(self.domain)
@@ -59,8 +62,6 @@ def main():
 
     args = readline.parse_args()
     course = PuCourse(args.term, args.crn)
-    course.scrape()
-    course.parse()
 
     if course.seats > 0 and course.waits <= 0:
         result = 'There are %s open seats in %s!' % (course.seats, course.name)
@@ -68,11 +69,11 @@ def main():
 
         if args.push:
             try:
-                rc = push.config()
+                config = push.configure()
             except KeyError:
                 push.fatal_unconfigured()
 
-            push.push(rc, 'Purdue course watcher\n' + result)
+            push.push(config, 'Purdue course watcher\n' + result)
 
 if __name__ == '__main__':
     main()
